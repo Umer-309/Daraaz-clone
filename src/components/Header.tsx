@@ -19,6 +19,7 @@ import MailIcon from '@mui/icons-material/Mail';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import MoreIcon from '@mui/icons-material/MoreVert';
 import { Container } from '@mui/material';
+// import { useSearchParams } from 'react-router-dom';
 
 
 const theme = createTheme({
@@ -27,31 +28,32 @@ const theme = createTheme({
             styleOverrides: {
                 inputRoot: {
                     '& .MuiOutlinedInput-notchedOutline': {
-                        borderColor: 'white', // Change border color
+                        borderColor: 'white',
                     },
                     '&:hover .MuiOutlinedInput-notchedOutline': {
-                        borderColor: 'white', // Change border color on hover
+                        borderColor: 'white',
                     },
                     '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
-                        borderColor: 'white', // Change border color on focus
+                        borderColor: 'white',
                     },
                 },
                 input: {
                     '&::placeholder': {
-                        color: 'white', // Change placeholder color
+                        color: 'white',
                     },
                 },
-                // Customize other styles as needed
             },
         },
     },
 });
 
 
-// Top 100 films as rated by IMDb users. http://www.imdb.com/chart/top
+
 const top100Films = products.map(product => ({ name: product.name }));
 
 export default function Header() {
+    // const [search, setSearch] = React.useState('');
+    // const [searchParams, setSearchparams] = useSearchParams()
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
     const [mobileMoreAnchorEl, setMobileMoreAnchorEl] =
         React.useState<null | HTMLElement>(null);
@@ -149,6 +151,16 @@ export default function Header() {
             </MenuItem>
         </Menu>
     )
+
+    // function handleChange(event) {
+    //     setSearch(event?.target.value)
+    //     console.log('changed')
+    //     console.log(search)
+
+    //     if (event.keyCode == 13) {
+    //         setSearchparams(search);
+    //     }
+    // }
     return (
         <>
             <Box sx={{ flexGrow: 1 }} className="header">
@@ -173,8 +185,7 @@ export default function Header() {
                                     id="highlights-demo"
                                     sx={{
                                         width: "60%"
-                                    }
-                                }
+                                    }}
                                     options={top100Films}
                                     getOptionLabel={(option) => option.name}
                                     renderInput={(params) => (
@@ -200,6 +211,7 @@ export default function Header() {
                                             </li>
                                         );
                                     }}
+                                    // onInputChange={handleChange}
                                 />
                             </ThemeProvider>
                             <Box sx={{ flexGrow: 1 }} />

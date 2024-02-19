@@ -18,9 +18,11 @@
     "autosuggest-highlight": "^3.3.4",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-router-dom": "^6.22.1",
     "styled-components": "^6.1.8"
   },
   "devDependencies": {
+    "@faker-js/faker": "^8.4.1",
     "@types/autosuggest-highlight": "^3.2.3",
     "@types/node": "^20.11.19",
     "@types/react": "^18.2.55",
