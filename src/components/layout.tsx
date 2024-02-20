@@ -7,7 +7,7 @@ export default function Layout() {
     return (
         <>
             <Header />
-            <Container maxWidth="sm">
+            <Container maxWidth="lg">
                 <Outlet />
             </Container>
         </>

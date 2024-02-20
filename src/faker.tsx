@@ -1,4 +1,5 @@
 import { faker } from "@faker-js/faker"
+import dummyImage from "../public/Images/dummy.webp"
 
 export interface Product {
     name: string;
@@ -79,10 +80,10 @@ const getRandomNumber = (min: number, max: number) => {
 export const products: Product [] = [
     {
         "name": "Handcrafted Concrete Sausages",
-        "description": "The beautiful range of Apple Naturalé that has an exciting mix of natural ingredients. With the Goodness of 100% Natural Ingredients",
+        "description": "TECH TOK AirPods_Pro Wireless Earbuds Bluetooth 5.0, Super Sound Bass, Charging Case and Extra Ear-Buds, Pop-Up Feature Compatible with All Devices",
         "price": 319,
-        "userId": "d893053b-76b3-4067-9ac6-f022249bb169",
-        "image": "https://avatars.githubusercontent.com/u/77803120",
+        "userId": "1",
+        "image": dummyImage,
         "catagory": "Computing, Cameras & Gaming",
         "rating": 3.6,
         "reviews": 642
