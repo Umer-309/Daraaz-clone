@@ -24,7 +24,10 @@ const theme = createTheme({
 });
 
 export default function Product() {    
-    products.sort((a, b) => a.price - b.price);
+    // products.sort((a, b) => a.price - b.price);
+// console.log(products);
+
+    
 
     return (
         <ThemeProvider theme={theme}>
@@ -49,8 +52,8 @@ export default function Product() {
                                                     alignItems: "center",
                                                     gap: "10px"
                                                 }}>
-                                                    <Rating readOnly value={3.7} name="read-only" precision={0.5} size="small" />
-                                                    <Typography component="p" variant="body3">(123)</Typography>
+                                                    <Rating readOnly value={product.rating} name="read-only" precision={0.5} size="small" />
+                                                    <Typography component="p" variant="body3">({product.reviews})</Typography>
                                                 </Box>
                                             </Box>
                                         </Paper>

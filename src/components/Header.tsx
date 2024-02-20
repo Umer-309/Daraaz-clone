@@ -18,7 +18,7 @@ import AccountCircle from '@mui/icons-material/AccountCircle';
 import MailIcon from '@mui/icons-material/Mail';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import MoreIcon from '@mui/icons-material/MoreVert';
-import { Container } from '@mui/material';
+import { Container, CssBaseline } from '@mui/material';
 // import { useSearchParams } from 'react-router-dom';
 
 
@@ -164,8 +164,8 @@ export default function Header() {
     return (
         <>
             <Box sx={{ flexGrow: 1 }} className="header">
-                <Container maxWidth="xl">
-                    <AppBar position="static">
+                <Container maxWidth="xl" >
+                    <AppBar position='relative' sx={{bgcolor:"#F85606"}}>
                         <Toolbar sx={{ gap: 5 }}>
 
                             <Typography
