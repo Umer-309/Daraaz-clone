@@ -19,7 +19,7 @@ import MailIcon from '@mui/icons-material/Mail';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import MoreIcon from '@mui/icons-material/MoreVert';
 import { Container, CssBaseline } from '@mui/material';
-// import { useSearchParams } from 'react-router-dom';
+import {  useSearchParams } from 'react-router-dom';
 
 
 const theme = createTheme({
@@ -52,11 +52,12 @@ const theme = createTheme({
 const top100Films = products.map(product => ({ name: product.name }));
 
 export default function Header() {
-    // const [search, setSearch] = React.useState('');
-    // const [searchParams, setSearchparams] = useSearchParams()
+    const [search, setSearch] = React.useState('');
+    const [searchParams, setSearchparams] = useSearchParams()
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
     const [mobileMoreAnchorEl, setMobileMoreAnchorEl] =
         React.useState<null | HTMLElement>(null);
+    
 
     const isMenuOpen = Boolean(anchorEl);
     const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
@@ -152,20 +153,18 @@ export default function Header() {
         </Menu>
     )
 
-    // function handleChange(event) {
-    //     setSearch(event?.target.value)
-    //     console.log('changed')
-    //     console.log(search)
+    function handleChange(event) {
+        setSearch(event?.target.value)
 
-    //     if (event.keyCode == 13) {
-    //         setSearchparams(search);
-    //     }
-    // }
+        if (event.keyCode === 13) {
+            setSearchparams(search);
+        }
+    }
     return (
         <>
             <Box sx={{ flexGrow: 1 }} className="header">
                 <Container maxWidth="xl" >
-                    <AppBar position='relative' sx={{bgcolor:"#F85606"}}>
+                    <AppBar position='relative' sx={{ bgcolor: "#F85606" }}>
                         <Toolbar sx={{ gap: 5 }}>
 
                             <Typography
@@ -211,7 +210,7 @@ export default function Header() {
                                             </li>
                                         );
                                     }}
-                                    // onInputChange={handleChange}
+                                    onInputChange={handleChange}
                                 />
                             </ThemeProvider>
                             <Box sx={{ flexGrow: 1 }} />
