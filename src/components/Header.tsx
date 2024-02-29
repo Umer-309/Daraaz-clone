@@ -156,9 +156,9 @@ export default function Header() {
     function handleChange(event) {
         setSearch(event?.target.value)
 
-        if (event.keyCode === 13) {
-            setSearchparams(search);
-        }
+        // if (event.keyCode !== null && event.keyCode === 13) {
+        //     setSearchparams(search);
+        // }
     }
     return (
         <>
@@ -182,6 +182,7 @@ export default function Header() {
                             <ThemeProvider theme={theme}>
                                 <Autocomplete
                                     id="highlights-demo"
+                                    value={search}
                                     sx={{
                                         width: "60%"
                                     }}

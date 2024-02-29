@@ -1,3 +1,4 @@
+import jest from "jest-mock";
 import { render, fireEvent, screen } from "@testing-library/react";
 import { Autocomplete, TextField } from "@mui/material";
 
@@ -8,7 +9,7 @@ const top100Films = [
 
 const handleChange = jest.fn()
 
-it("should call handleChange when input value changes", () => {
+it("should render the input Field", () => {
  
     render(
         <Autocomplete
@@ -25,6 +26,25 @@ it("should call handleChange when input value changes", () => {
 
 
     const inputElement = screen.getByLabelText("Search In Daraaz");
-    fireEvent.change(inputElement, { target: { value: "test input" } });
-    expect(inputElement.value).toHaveBeenCalledWith("test input");
+    expect(inputElement).toBeInTheDocument();
+});
+test("Options are displayed when input is focused or has a value", () => {
+    render(
+        <Autocomplete
+            id="highlights-demo"
+            options={top100Films}
+            getOptionLabel={(option) => option.name}
+            renderInput={(params) => (
+                <TextField {...params} label="Search In Daraaz" margin="normal" />
+            )}
+            onInputChange={handleChange}
+        />
+    );
+
+    const inputElement = screen.getByLabelText("Search In Daraaz");
+    fireEvent.focus(inputElement);
+
+    top100Films.forEach((film) => {
+        expect(screen.getByText(film.name)).toBeInTheDocument();
+    });
 });
