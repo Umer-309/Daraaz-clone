@@ -182,7 +182,6 @@ export default function Header() {
                             <ThemeProvider theme={theme}>
                                 <Autocomplete
                                     id="highlights-demo"
-                                    value={search}
                                     sx={{
                                         width: "60%"
                                     }}

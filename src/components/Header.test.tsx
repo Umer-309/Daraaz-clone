@@ -3,8 +3,8 @@ import { render, fireEvent, screen } from "@testing-library/react";
 import { Autocomplete, TextField } from "@mui/material";
 
 const top100Films = [
-    { name: "The Shawshank Redemption" },
-    { name: "The Godfather" },
+    { name: "Handcrafted Concrete Sausages" },
+    { name: "Small Plastic Chair" },
 ];
 
 const handleChange = jest.fn()
@@ -45,6 +45,6 @@ test("Options are displayed when input is focused or has a value", () => {
     fireEvent.focus(inputElement);
 
     top100Films.forEach((film) => {
-        expect(screen.getByText(film.name)).toBeInTheDocument();
+        expect(screen.getByText(film.name)).toBeVisible();
     });
 });
