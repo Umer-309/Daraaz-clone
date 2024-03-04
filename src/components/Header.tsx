@@ -153,12 +153,12 @@ export default function Header() {
         </Menu>
     )
 
-    function handleChange(event) {
+    function handleChange(event: React.ChangeEvent<HTMLInputElement>) {
         setSearch(event?.target.value)
 
-        // if (event.keyCode !== null && event.keyCode === 13) {
-        //     setSearchparams(search);
-        // }
+        if (event && event.keyCode !== null && event.keyCode === 13) {
+            setSearchparams(search);
+        }
     }
     return (
         <>
@@ -182,6 +182,8 @@ export default function Header() {
                             <ThemeProvider theme={theme}>
                                 <Autocomplete
                                     id="highlights-demo"
+                                    onInputChange={handleChange}
+                                    value={search}
                                     sx={{
                                         width: "60%"
                                     }}
@@ -210,7 +212,6 @@ export default function Header() {
                                             </li>
                                         );
                                     }}
-                                    onInputChange={handleChange}
                                 />
                             </ThemeProvider>
                             <Box sx={{ flexGrow: 1 }} />

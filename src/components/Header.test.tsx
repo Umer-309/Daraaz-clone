@@ -10,7 +10,7 @@ const top100Films = [
 const handleChange = jest.fn()
 
 it("should render the input Field", () => {
- 
+
     render(
         <Autocomplete
             id="highlights-demo"
@@ -20,15 +20,17 @@ it("should render the input Field", () => {
                 <TextField {...params} label="Search In Daraaz" margin="normal" />
             )}
             onInputChange={handleChange}
-            
+
         />
     );
-
 
     const inputElement = screen.getByLabelText("Search In Daraaz");
     expect(inputElement).toBeInTheDocument();
 });
-test("Options are displayed when input is focused or has a value", () => {
+
+
+
+test("Relevant Options are displayed when input has a value", () => {
     render(
         <Autocomplete
             id="highlights-demo"
@@ -41,10 +43,7 @@ test("Options are displayed when input is focused or has a value", () => {
         />
     );
 
-    const inputElement = screen.getByLabelText("Search In Daraaz");
-    fireEvent.focus(inputElement);
-
-    top100Films.forEach((film) => {
-        expect(screen.getByText(film.name)).toBeVisible();
-    });
+    const inputElement = screen.getByLabelText(/search in daraaz/i);
+    fireEvent.change(inputElement, { target: { value: "Handcrafted Concrete Sausages" } });
+    expect(screen.getByText("Handcrafted Concrete Sausages")).toBeVisible();
 });

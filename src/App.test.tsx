@@ -13,6 +13,7 @@ const MockComponent = () => {
 
 
 it("should have Daraaz", () => {
+ 
   render(<MockComponent />)
   const message = screen.getByLabelText("Search In Daraaz");
   expect(message).toBeInTheDocument();
