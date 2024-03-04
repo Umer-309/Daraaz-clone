@@ -38,6 +38,8 @@ export default function Product() {
     const searchString = location.search;
     const searchArr = searchString.split(/[^a-zA-Z0-9]+/).filter(Boolean)
     const searched = searchArr.join(' ');
+    console.log(location);
+    
 
 
     const searchItems = products

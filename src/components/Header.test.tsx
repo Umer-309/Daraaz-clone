@@ -1,6 +1,20 @@
 import jest from "jest-mock";
 import { render, fireEvent, screen } from "@testing-library/react";
 import { Autocomplete, TextField } from "@mui/material";
+import { BrowserRouter } from "react-router-dom";
+import Header from "./Header";
+
+
+const MockComponent = () => {
+    return (
+    <BrowserRouter>
+      <Header />
+    </BrowserRouter>
+    )
+  }
+  
+  
+ 
 
 const top100Films = [
     { name: "Handcrafted Concrete Sausages" },
@@ -9,19 +23,16 @@ const top100Films = [
 
 const handleChange = jest.fn()
 
+it("should have Daraaz", () => {
+    render(<MockComponent />)
+    const message = screen.getByLabelText("Search In Daraaz");
+    expect(message).toBeInTheDocument();
+  });
+
 it("should render the input Field", () => {
 
     render(
-        <Autocomplete
-            id="highlights-demo"
-            options={top100Films}
-            getOptionLabel={(option) => option.name}
-            renderInput={(params) => (
-                <TextField {...params} label="Search In Daraaz" margin="normal" />
-            )}
-            onInputChange={handleChange}
-
-        />
+       <MockComponent />
     );
 
     const inputElement = screen.getByLabelText("Search In Daraaz");
@@ -32,15 +43,7 @@ it("should render the input Field", () => {
 
 test("Relevant Options are displayed when input has a value", () => {
     render(
-        <Autocomplete
-            id="highlights-demo"
-            options={top100Films}
-            getOptionLabel={(option) => option.name}
-            renderInput={(params) => (
-                <TextField {...params} label="Search In Daraaz" margin="normal" />
-            )}
-            onInputChange={handleChange}
-        />
+       <MockComponent />
     );
 
     const inputElement = screen.getByLabelText(/search in daraaz/i);

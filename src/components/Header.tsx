@@ -19,7 +19,7 @@ import MailIcon from '@mui/icons-material/Mail';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import MoreIcon from '@mui/icons-material/MoreVert';
 import { Container } from '@mui/material';
-import {  useSearchParams } from 'react-router-dom';
+import { useSearchParams } from 'react-router-dom';
 
 
 const theme = createTheme({
@@ -52,12 +52,13 @@ const theme = createTheme({
 const top100Films = products.map(product => ({ name: product.name }));
 
 export default function Header() {
-    const [search, setSearch] = React.useState('');
+    const [search, setSearch] = React.useState<string | null>(null);
+    const [inputValue, setInputValue] = React.useState('');
     const [searchParams, setSearchparams] = useSearchParams()
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
     const [mobileMoreAnchorEl, setMobileMoreAnchorEl] =
         React.useState<null | HTMLElement>(null);
-    
+
 
     const isMenuOpen = Boolean(anchorEl);
     const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
@@ -153,11 +154,13 @@ export default function Header() {
         </Menu>
     )
 
-    function handleChange(event: React.ChangeEvent<HTMLInputElement>) {
-        setSearch(event?.target.value)
+    function handleChange(event: any, value: typeof search) {
+        setSearch(value)
 
-        if (event && event.keyCode !== null && event.keyCode === 13) {
-            setSearchparams(search);
+        if (event && event.key !== null && event.key === "Enter") {
+            if (value !== null) {
+                setSearchparams({ search: value });
+            }
         }
     }
     return (
@@ -182,8 +185,12 @@ export default function Header() {
                             <ThemeProvider theme={theme}>
                                 <Autocomplete
                                     id="highlights-demo"
-                                    onInputChange={handleChange}
+                                    onInputChange={(event, newValue) => {
+                                        setInputValue(newValue);
+                                        handleChange(event, search);
+                                    }}
                                     value={search}
+                                    inputValue={inputValue}
                                     sx={{
                                         width: "60%"
                                     }}
