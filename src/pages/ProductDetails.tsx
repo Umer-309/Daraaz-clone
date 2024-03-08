@@ -41,7 +41,16 @@ export default function ProductDetails() {
         if (current.length > 0) {
             setCurrentProduct(current[0]); 
         } else {
-            setCurrentProduct({}); 
+            setCurrentProduct({
+                name: "",
+                description: "",
+                price: 0,
+                userId: "",
+                image: "",
+                catagory: "",
+                rating: 0,
+                reviews: 0
+            }); 
         }
         setCount(1)
     }
