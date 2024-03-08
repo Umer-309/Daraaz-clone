@@ -1,6 +1,5 @@
-import jest from "jest-mock";
+// import jest from "jest-mock";
 import { render, fireEvent, screen } from "@testing-library/react";
-import { Autocomplete, TextField } from "@mui/material";
 import { BrowserRouter } from "react-router-dom";
 import Header from "./Header";
 
@@ -16,12 +15,12 @@ const MockComponent = () => {
   
  
 
-const top100Films = [
-    { name: "Handcrafted Concrete Sausages" },
-    { name: "Small Plastic Chair" },
-];
+// const top100Films = [
+//     { name: "Handcrafted Concrete Sausages" },
+//     { name: "Small Plastic Chair" },
+// ];
 
-const handleChange = jest.fn()
+// const handleChange = jest.fn()
 
 it("should have Daraaz", () => {
     render(<MockComponent />)

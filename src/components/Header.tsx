@@ -52,9 +52,9 @@ const theme = createTheme({
 const top100Films = products.map(product => ({ name: product.name }));
 
 export default function Header() {
-    const [search, setSearch] = React.useState<string | null>(null);
+    const [search, setSearch] = React.useState<string | null>("");
     const [inputValue, setInputValue] = React.useState('');
-    const [searchParams, setSearchparams] = useSearchParams()
+    const [_searchParams, setSearchparams] = useSearchParams()
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
     const [mobileMoreAnchorEl, setMobileMoreAnchorEl] =
         React.useState<null | HTMLElement>(null);
@@ -156,10 +156,11 @@ export default function Header() {
 
     function handleChange(event: any, value: typeof search) {
         setSearch(value)
+        setInputValue(value || "")
 
         if (event && event.key !== null && event.key === "Enter") {
             if (value !== null) {
-                setSearchparams({ search: value });
+                setSearchparams( value );
             }
         }
     }
@@ -185,11 +186,7 @@ export default function Header() {
                             <ThemeProvider theme={theme}>
                                 <Autocomplete
                                     id="highlights-demo"
-                                    onInputChange={(event, newValue) => {
-                                        setInputValue(newValue);
-                                        handleChange(event, search);
-                                    }}
-                                    value={search}
+                                    onInputChange={handleChange}
                                     inputValue={inputValue}
                                     sx={{
                                         width: "60%"

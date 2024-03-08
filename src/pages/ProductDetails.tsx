@@ -1,11 +1,31 @@
 import React from "react";
 import { useParams } from "react-router-dom";
-import { products, Product } from "../faker";
-import { Box, Button, ButtonGroup, Container, Grid, Input, OutlinedInput, Rating, Typography } from "@mui/material";
+import { products } from "../faker";
+import { Box, Button, ButtonGroup, Container, Grid, Input, Rating, Typography } from "@mui/material";
 
+
+interface Product {
+    name: string;
+    description: string;
+    price: number;
+    userId: string;
+    image: string;
+    catagory: string;
+    rating: number;
+    reviews: number
+}
 
 export default function ProductDetails() {
-    const [currentProduct, setCurrentProduct] = React.useState(null)
+    const [currentProduct, setCurrentProduct] = React.useState({
+        name: "",
+        description: "",
+        price: 0,
+        userId: "",
+        image: "",
+        catagory: "",
+        rating: 0,
+        reviews: 0
+    })
     const [count, setCount] = React.useState(1)
     let { id } = useParams();
 
@@ -18,7 +38,11 @@ export default function ProductDetails() {
         }
     })
     React.useEffect(() => {
-        setCurrentProduct(...current)
+        if (current.length > 0) {
+            setCurrentProduct(current[0]); 
+        } else {
+            setCurrentProduct({}); 
+        }
         setCount(1)
     }
         , [id])
@@ -31,7 +55,7 @@ export default function ProductDetails() {
         setCount(prevCount => prevCount + 1)
     }
     const handleCart = () => {
-        alert(`Added ${count} ${currentProduct.name} to the cart`)
+        alert(`Added ${count} ${currentProduct?.name} to the cart`)
     }
     if (currentProduct) {
         return (
@@ -40,7 +64,7 @@ export default function ProductDetails() {
             <Container sx={{ bgcolor: "#fff" }} maxWidth="xl">
                 <Box sx={{ flexGrow: 1 }}>
                     <Grid container spacing={2}>
-                        <Grid item xs={4} sx={{alignItems:"center", justifyContent:"center", display:"flex"}}>
+                        <Grid item xs={4} sx={{ alignItems: "center", justifyContent: "center", display: "flex" }}>
                             <img width="100%" src={currentProduct.image} alt="" />
                         </Grid>
                         <Grid item xs={6}>
@@ -53,57 +77,57 @@ export default function ProductDetails() {
                                 <Typography component="p" variant="body3">{currentProduct.reviews} ratings</Typography>
                             </Box>
                             <hr />
-                            <Typography variant="h5" component="p" sx={{ color: "red", mt:3 }}>Rs. {currentProduct.price}</Typography>
+                            <Typography variant="h5" component="p" sx={{ color: "red", mt: 3 }}>Rs. {currentProduct.price}</Typography>
                             <Box sx={{
                                 display: "flex",
                                 alignItems: "center",
                                 gap: 2,
-                                mt:3
+                                mt: 3
                             }}>
                                 <Typography variant="body2" component="p">Quantity</Typography>
                                 <Box sx={{
-      display: "flex",
-      alignItems: "center",
-      justifyContent: "center",
-    }}>
-      <Button
-        variant="text"
-        onClick={handleDecrement}
-        sx={{ height: "100%", minWidth: 0, px:2 }}
-      >
-        -
-      </Button>
-      <Input
-        inputComponent="input"
-        type="text"
-        value={count}
-        sx={{
-          maxWidth: "20%",
-          px:2,
-          position: "unset",
-          border: "none",
-          outline: "none",
-          "&::-webkit-inner-spin-button, &::-webkit-outer-spin-button": {
-            WebkitAppearance: "none",
-            margin: 0,
-          },
-          "-moz-appearance": "textfield", /* Hide spinner arrows in Firefox */
-        }}
-      />
-      <Button
-        variant="text"
-        onClick={handleIncrement}
-        sx={{ height: "100%", minWidth: 0, px:2 }}
-      >
-        +
-      </Button>
-    </Box>
+                                    display: "flex",
+                                    alignItems: "center",
+                                    justifyContent: "center",
+                                }}>
+                                    <Button
+                                        variant="text"
+                                        onClick={handleDecrement}
+                                        sx={{ height: "100%", minWidth: 0, px: 2 }}
+                                    >
+                                        -
+                                    </Button>
+                                    <Input
+                                        inputComponent="input"
+                                        type="text"
+                                        value={count}
+                                        sx={{
+                                            maxWidth: "20%",
+                                            px: 2,
+                                            position: "unset",
+                                            border: "none",
+                                            outline: "none",
+                                            "&::-webkit-inner-spin-button, &::-webkit-outer-spin-button": {
+                                                WebkitAppearance: "none",
+                                                margin: 0,
+                                            },
+                                            "-moz-appearance": "textfield", /* Hide spinner arrows in Firefox */
+                                        }}
+                                    />
+                                    <Button
+                                        variant="text"
+                                        onClick={handleIncrement}
+                                        sx={{ height: "100%", minWidth: 0, px: 2 }}
+                                    >
+                                        +
+                                    </Button>
+                                </Box>
                             </Box>
-                            <ButtonGroup variant="contained" sx={{ gap: 2, boxShadow:"none", my:3 }} fullWidth aria-label="Basic button group">
+                            <ButtonGroup variant="contained" sx={{ gap: 2, boxShadow: "none", my: 3 }} fullWidth aria-label="Basic button group">
                                 <Button>Buy</Button>
                                 <Button sx={{
                                     bgcolor: "#f85606",
-                                    borderRadius: "0px", 
+                                    borderRadius: "0px",
                                     color: "#fff"
                                 }}
                                     onClick={handleCart}>Add to cart</Button>

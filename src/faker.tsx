@@ -1,5 +1,5 @@
 import { faker } from "@faker-js/faker"
-import dummyImage from "../public/Images/dummy.webp"
+import dummyImage from "./Images/dummy.webp"
 
 export interface Product {
     name: string;
@@ -13,12 +13,12 @@ export interface Product {
 }
 
 
-interface Catagory {
+export interface Category {
     id: string,
     name: string
 }
 
-export const categories: Catagory[] = [{
+export const categories: Category[] = [{
     name: "Mobile & Tablets",
     id: faker.string.uuid()
 },
@@ -51,14 +51,14 @@ export const categories: Catagory[] = [{
     id: faker.string.uuid()
 }]
 
-const random = (arr: Catagory[]) => {
-    return Math.floor(Math.random() * arr.length);
-}
-const getRandomNumber = (min: number, max: number) => {
-    const randowmNum = Math.floor(Math.random() * (max * 10 - min * 10 + 1) + min * 10)
+// const random = (arr: Catagory[]) => {
+//     return Math.floor(Math.random() * arr.length);
+// }
+// const getRandomNumber = (min: number, max: number) => {
+//     const randowmNum = Math.floor(Math.random() * (max * 10 - min * 10 + 1) + min * 10)
 
-    return randowmNum / 10;
-}
+//     return randowmNum / 10;
+// }
 
 // export const products = {
 // export function generateProduct(): Product {
