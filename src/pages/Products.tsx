@@ -4,31 +4,14 @@ import {
     Grid,
     Paper,
     Rating,
-    ThemeProvider,
     Typography,
-    createTheme
 } from "@mui/material";
 import { products, categories } from "../faker";
 import { Link, useLocation } from "react-router-dom";
 import "./Products.css";
 
 
-const theme = createTheme({
-    components: {
-        MuiTypography: {
-            variants: [
-                {
-                    props: {
-                        variant: "body3",
-                    },
-                    style: {
-                        fontSize: "12px"
-                    },
-                },
-            ]
-        }
-    }
-});
+
 
 export default function Product() {
     const location = useLocation()
@@ -78,7 +61,8 @@ export default function Product() {
                                 />
                                 <Typography
                                     component="p"
-                                    variant="body3"
+                                    variant="body1"
+                                    sx={{fontSize: "12px"}}
                                 >
                                     ({product.reviews})
                                 </Typography>
@@ -93,7 +77,7 @@ export default function Product() {
 
 
     return (
-        <ThemeProvider theme={theme}>
+        
             <Container maxWidth="xl">
                 {
                     searched ? (
@@ -164,7 +148,8 @@ export default function Product() {
                                                                 />
                                                                 <Typography
                                                                     component="p"
-                                                                    variant="body3"
+                                                                    variant="body1"
+                                                                    sx={{fontSize: "12px"}}
                                                                 >
                                                                     ({product.reviews})
                                                                 </Typography>
@@ -178,6 +163,6 @@ export default function Product() {
                         </Box>
                     ))}
             </Container>
-        </ThemeProvider>
     );
 }
+

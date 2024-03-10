@@ -22,6 +22,10 @@ const MockComponent = () => {
 
 // const handleChange = jest.fn()
 
+test('renders Header component', () => {
+  render(<MockComponent />);
+});
+
 it("should have Daraaz", () => {
     render(<MockComponent />)
     const message = screen.getByLabelText("Search In Daraaz");
@@ -48,4 +52,11 @@ test("Relevant Options are displayed when input has a value", () => {
     const inputElement = screen.getByLabelText(/search in daraaz/i);
     fireEvent.change(inputElement, { target: { value: "Handcrafted Concrete Sausages" } });
     expect(screen.getByText("Handcrafted Concrete Sausages")).toBeVisible();
+});
+
+test('updates search input value', () => {
+  render(<MockComponent />);
+  const searchInput = screen.getByLabelText('Search In Daraaz');
+  fireEvent.change(searchInput, { target: { value: 'Handcrafted Concrete Sausages' } });
+  expect(searchInput).toHaveValue('Handcrafted Concrete Sausages');
 });

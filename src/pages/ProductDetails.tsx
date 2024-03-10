@@ -16,7 +16,7 @@ interface Product {
 }
 
 export default function ProductDetails() {
-    const [currentProduct, setCurrentProduct] = React.useState({
+    const [currentProduct, setCurrentProduct] = React.useState<Product>({
         name: "",
         description: "",
         price: 0,
@@ -30,16 +30,12 @@ export default function ProductDetails() {
     let { id } = useParams();
 
 
-    let current: Product[] = products.filter(product => {
-        if (product.userId == id) {
-            return {
-                ...product
-            }
-        }
-    })
+    let current: Product[] = products.filter(product => product.userId === id);
+
+
     React.useEffect(() => {
         if (current.length > 0) {
-            setCurrentProduct(current[0]); 
+            setCurrentProduct(current[0]);
         } else {
             setCurrentProduct({
                 name: "",
@@ -50,7 +46,7 @@ export default function ProductDetails() {
                 catagory: "",
                 rating: 0,
                 reviews: 0
-            }); 
+            });
         }
         setCount(1)
     }
@@ -64,7 +60,9 @@ export default function ProductDetails() {
         setCount(prevCount => prevCount + 1)
     }
     const handleCart = () => {
-        alert(`Added ${count} ${currentProduct?.name} to the cart`)
+        if (currentProduct) {
+            alert(`Added ${count} ${currentProduct.name} to the cart`);
+        }
     }
     if (currentProduct) {
         return (
@@ -83,7 +81,7 @@ export default function ProductDetails() {
                                 alignItems: "center"
                             }} gap={1}>
                                 <Rating readOnly value={currentProduct.rating} name="read-only" precision={0.5} size="small" />
-                                <Typography component="p" variant="body3">{currentProduct.reviews} ratings</Typography>
+                                <Typography component="p" variant="body1" sx={{ fontSize: 12 }}>{currentProduct.reviews} ratings</Typography>
                             </Box>
                             <hr />
                             <Typography variant="h5" component="p" sx={{ color: "red", mt: 3 }}>Rs. {currentProduct.price}</Typography>
@@ -120,8 +118,9 @@ export default function ProductDetails() {
                                                 WebkitAppearance: "none",
                                                 margin: 0,
                                             },
-                                            "-moz-appearance": "textfield", /* Hide spinner arrows in Firefox */
+                                            "-moz-appearance": "textfield",
                                         }}
+                                        data-testid="quantity-input"
                                     />
                                     <Button
                                         variant="text"
