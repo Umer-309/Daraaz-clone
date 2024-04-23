@@ -1,73 +1,39 @@
 import React from "react";
-import { useParams } from "react-router-dom";
-import { products } from "../faker";
 import { Box, Button, ButtonGroup, Container, Grid, Input, Rating, Typography } from "@mui/material";
+import { useDispatch, useSelector } from "react-redux";
+import { setCurrentProduct, setCount, setCart, fetchProductById } from "../products/reducers";
+import { useParams } from "react-router-dom";
 
 
-interface Product {
-    name: string;
-    description: string;
-    price: number;
-    userId: string;
-    image: string;
-    catagory: string;
-    rating: number;
-    reviews: number
-}
+
 
 export default function ProductDetails() {
-    const [currentProduct, setCurrentProduct] = React.useState<Product>({
-        name: "",
-        description: "",
-        price: 0,
-        userId: "",
-        image: "",
-        catagory: "",
-        rating: 0,
-        reviews: 0
-    })
-    const [count, setCount] = React.useState(1)
-    let { id } = useParams();
+    const dispatch = useDispatch();
+    const currentProduct = useSelector((state: any) => state.product.currentProduct[0]);
+    const count: number = useSelector((state: any) => state.product.count);
+    const { id } = useParams();
 
-
-    let current: Product[] = products.filter(product => product.userId === id);
-
-
+    console.log(id)
     React.useEffect(() => {
-        if (current.length > 0) {
-            setCurrentProduct(current[0]);
-        } else {
-            setCurrentProduct({
-                name: "",
-                description: "",
-                price: 0,
-                userId: "",
-                image: "",
-                catagory: "",
-                rating: 0,
-                reviews: 0
-            });
-        }
-        setCount(1)
-    }
-        , [id])
+        fetchProductById(id)
+        dispatch(fetchProductById(id))
+    }, [id, dispatch])
 
+    console.log(currentProduct)
 
     const handleDecrement = () => {
-        setCount(prevCount => prevCount > 1 ? prevCount - 1 : prevCount)
+        dispatch(setCount(count > 1 ? count - 1 : count));
     }
     const handleIncrement = () => {
-        setCount(prevCount => prevCount + 1)
+        dispatch(setCount(count + 1));
     }
     const handleCart = () => {
         if (currentProduct) {
-            alert(`Added ${count} ${currentProduct.name} to the cart`);
+            dispatch(setCart({ productId: currentProduct.userId, quantity: count }));
         }
     }
     if (currentProduct) {
         return (
-
-
             <Container sx={{ bgcolor: "#fff" }} maxWidth="xl">
                 <Box sx={{ flexGrow: 1 }}>
                     <Grid container spacing={2}>

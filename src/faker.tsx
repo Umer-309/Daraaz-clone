@@ -49,35 +49,38 @@ export const categories: Category[] = [{
 {
     name: "Baby, Kids & Toys",
     id: faker.string.uuid()
-}]
+}];
 
-// const random = (arr: Catagory[]) => {
-//     return Math.floor(Math.random() * arr.length);
-// }
-// const getRandomNumber = (min: number, max: number) => {
-//     const randowmNum = Math.floor(Math.random() * (max * 10 - min * 10 + 1) + min * 10)
+export interface Coupon {
+    code: string;
+    discountAmount: number;
+}
 
-//     return randowmNum / 10;
-// }
+export const coupons: Coupon[] = [{
+    code: 'DARAAZ10',
+    discountAmount: 10
+},
+{
+    code: 'DARAAZ20',
+    discountAmount: 20
+},
+{
+    code: 'DARAAZ25',
+    discountAmount: 25
+},
+{
+    code: 'DARAAZ30',
+    discountAmount: 30
+},
+{
+    code: 'DARAAZ35',
+    discountAmount: 35
+}];
+    
+    
 
-// export const products = {
-// export function generateProduct(): Product {
-//     return {
-//         name: faker.commerce.productName(),
-//         description: faker.commerce.productDescription(),
-//         price: Number(faker.commerce.price({ min: 0, max: 1000 })),
-//         userId: faker.string.uuid(),
-//         image: faker.image.avatar(),
-//         catagory: categories[random(categories)].name,
-//         rating: getRandomNumber(2, 5),
-//         reviews: Math.floor(Math.random() * 1000)
-//     }
-// }
 
-// export const products: Product[] = Array.from({ length: 50 }, () => generateProduct())
-
-
-export const products: Product [] = [
+export const products: Product[] = [
     {
         "name": "Handcrafted Concrete Sausages",
         "description": "TECH TOK AirPods_Pro Wireless Earbuds Bluetooth 5.0, Super Sound Bass, Charging Case and Extra Ear-Buds, Pop-Up Feature Compatible with All Devices",
@@ -579,3 +582,41 @@ export const products: Product [] = [
         "reviews": 154
     }
 ]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    // const random = (arr: Catagory[]) => {
+    //     return Math.floor(Math.random() * arr.length);
+    // }
+    // const getRandomNumber = (min: number, max: number) => {
+    //     const randowmNum = Math.floor(Math.random() * (max * 10 - min * 10 + 1) + min * 10)
+    
+    //     return randowmNum / 10;
+    // }
+    
+    // export const products = {
+    // export function generateProduct(): Product {
+    //     return {
+    //         name: faker.commerce.productName(),
+    //         description: faker.commerce.productDescription(),
+    //         price: Number(faker.commerce.price({ min: 0, max: 1000 })),
+    //         userId: faker.string.uuid(),
+    //         image: faker.image.avatar(),
+    //         catagory: categories[random(categories)].name,
+    //         rating: getRandomNumber(2, 5),
+    //         reviews: Math.floor(Math.random() * 1000)
+    //     }
+    // }
+    
+    // export const products: Product[] = Array.from({ length: 50 }, () => generateProduct())

@@ -19,7 +19,9 @@ import MailIcon from '@mui/icons-material/Mail';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import MoreIcon from '@mui/icons-material/MoreVert';
 import { Container } from '@mui/material';
-import { useSearchParams } from 'react-router-dom';
+import { Link, useSearchParams } from 'react-router-dom';
+import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
+import { useDispatch, useSelector } from 'react-redux';
 
 
 const theme = createTheme({
@@ -52,13 +54,14 @@ const theme = createTheme({
 const top100Films = products.map(product => ({ name: product.name }));
 
 export default function Header() {
+    const dispatch = useDispatch();
+    const count = useSelector((state: any) => state.product.shoppingCart ? state.product.shoppingCart.length : 0)
     const [search, setSearch] = React.useState<string | null>("");
     const [inputValue, setInputValue] = React.useState('');
     const [_searchParams, setSearchparams] = useSearchParams()
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
     const [mobileMoreAnchorEl, setMobileMoreAnchorEl] =
         React.useState<null | HTMLElement>(null);
-
 
     const isMenuOpen = Boolean(anchorEl);
     const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
@@ -171,18 +174,20 @@ export default function Header() {
                     <AppBar position='relative' sx={{ bgcolor: "#F85606" }}>
                         <Toolbar sx={{ gap: 5 }}>
 
-                            <Typography
-                                variant="h6"
-                                noWrap
-                                component="div"
-                                sx={{
-                                    display: {
-                                        xs: 'none', sm: 'block'
-                                    }
-                                }}
-                            >
-                                Daraaz
-                            </Typography>
+                            <Link to="/">
+                                <Typography
+                                    variant="h6"
+                                    noWrap
+                                    component="div"
+                                    sx={{
+                                        display: {
+                                            xs: 'none', sm: 'block'
+                                        }
+                                    }}
+                                >
+                                    Daraaz
+                                </Typography>
+                            </Link>
                             <ThemeProvider theme={theme}>
                                 <Autocomplete
                                     id="highlights-demo"
@@ -220,31 +225,17 @@ export default function Header() {
                             </ThemeProvider>
                             <Box sx={{ flexGrow: 1 }} />
                             <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
-                                <IconButton size="large" aria-label="show 4 new mails" color="inherit">
-                                    <Badge badgeContent={4} color="error">
-                                        <MailIcon />
-                                    </Badge>
-                                </IconButton>
+                            <Link to="/cart">
                                 <IconButton
                                     size="large"
-                                    aria-label="show 17 new notifications"
+                                    aria-label="shopping cart"
                                     color="inherit"
                                 >
-                                    <Badge badgeContent={17} color="error">
-                                        <NotificationsIcon />
+                                    <Badge badgeContent={count} color="error">
+                                        <AddShoppingCartIcon />
                                     </Badge>
                                 </IconButton>
-                                <IconButton
-                                    size="large"
-                                    edge="end"
-                                    aria-label="account of current user"
-                                    aria-controls={menuId}
-                                    aria-haspopup="true"
-                                    onClick={handleProfileMenuOpen}
-                                    color="inherit"
-                                >
-                                    <AccountCircle />
-                                </IconButton>
+                            </Link>
                             </Box>
                             <Box sx={{ display: { xs: 'flex', md: 'none' } }}>
                                 <IconButton
