@@ -1,6 +1,5 @@
-import jest from "jest-mock";
+// import jest from "jest-mock";
 import { render, fireEvent, screen } from "@testing-library/react";
-import { Autocomplete, TextField } from "@mui/material";
 import { BrowserRouter } from "react-router-dom";
 import Header from "./Header";
 
@@ -16,12 +15,16 @@ const MockComponent = () => {
   
  
 
-const top100Films = [
-    { name: "Handcrafted Concrete Sausages" },
-    { name: "Small Plastic Chair" },
-];
+// const top100Films = [
+//     { name: "Handcrafted Concrete Sausages" },
+//     { name: "Small Plastic Chair" },
+// ];
 
-const handleChange = jest.fn()
+// const handleChange = jest.fn()
+
+test('renders Header component', () => {
+  render(<MockComponent />);
+});
 
 it("should have Daraaz", () => {
     render(<MockComponent />)
@@ -49,4 +52,11 @@ test("Relevant Options are displayed when input has a value", () => {
     const inputElement = screen.getByLabelText(/search in daraaz/i);
     fireEvent.change(inputElement, { target: { value: "Handcrafted Concrete Sausages" } });
     expect(screen.getByText("Handcrafted Concrete Sausages")).toBeVisible();
+});
+
+test('updates search input value', () => {
+  render(<MockComponent />);
+  const searchInput = screen.getByLabelText('Search In Daraaz');
+  fireEvent.change(searchInput, { target: { value: 'Handcrafted Concrete Sausages' } });
+  expect(searchInput).toHaveValue('Handcrafted Concrete Sausages');
 });
