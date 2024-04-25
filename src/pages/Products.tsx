@@ -9,46 +9,40 @@ import {
     Rating,
     Typography,
 } from "@mui/material";
-import { fetchProducts, setCurrentProduct } from '../products/reducers'
+import { setCurrentProduct, useGetAllProductsQuery, useGetAllCategoriesQuery } from '../app/products/reducers'
 import "./Products.css";
 
 
 export default function Product() {
     const dispatch = useDispatch();
-    const { products, categories, loading, error } = useSelector((state: any) => state.product);
+    const { data: products, error, isLoading } = useGetAllProductsQuery();
+    const { data: categories } = useGetAllCategoriesQuery();
+
 
     const location = useLocation()
     const searchString = location.search;
     const searchArr = searchString.split(/[^a-zA-Z0-9]+/).filter(Boolean)
     const searched = searchArr.join(' ');
-    console.log(products)
 
 
-    const productsCopy = [...products];
-
-    productsCopy.sort((a, b) => a.price - b.price);
-    React.useEffect(() => {
-        dispatch(fetchProducts());
-    }, [dispatch]);
-
-    if (loading) {
-        return <div>Loading...</div>;
-    }
-
-    if (error) {
-        return <div>Error: {error.message}</div>;
-    }
-
-
-    const searchItems = productsCopy
-        .filter(product => product.name.includes(searched))
+    const sortedProducts = React.useMemo(() => {
+        if (!products || !Array.isArray(products)) return [];
+        return [...products].sort((a, b) => {
+            const priceA = a.price || 0;
+            const priceB = b.price || 0;
+            return priceA - priceB;
+        });
+    }, [products]);
+    const searchItems = sortedProducts
+    ?.filter(product => product.name.includes(searched))
         .map(product => (
             <Grid
                 item
                 xs={2}
                 key={product.userId}
             >
-                <Link to={product.userId}>
+                <Link to={`products/${product.userId}`}
+                    onClick={() => dispatch(setCurrentProduct({ id: product.userId }))}>
 
                     <Paper className="product-single">
                         <img src={product.image} alt={product.name} />
@@ -113,7 +107,7 @@ export default function Product() {
                 ) : null
             }
             {
-                categories.map(category => (
+                categories?.map(category => (
                     <Box key={category.id}>
                         <Typography
                             component="h3"
@@ -127,15 +121,15 @@ export default function Product() {
                         </Typography>
                         <Grid container spacing={1}>
                             {
-                                productsCopy
-                                    .filter(product => product.catagory === category.name)
+                                products
+                                    ?.filter(product => product.catagory === category.name)
                                     .map(product => (
                                         <Grid
                                             item
                                             xs={2}
                                             key={product.userId}
                                         >
-                                            <Link to={product.userId} onClick={() => dispatch(setCurrentProduct({ id: product.userId }))}>
+                                            <Link to={`products/${product.userId}`} onClick={() => dispatch(setCurrentProduct({ id: product.userId }))}>
 
                                                 <Paper className="product-single">
                                                     <img src={product.image} alt={product.name} />
