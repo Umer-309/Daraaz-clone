@@ -4,22 +4,18 @@ import { useDispatch, useSelector } from "react-redux";
 import { setCount, setCart, useGetProductByIdQuery } from "../app/products/reducers";
 import { useParams } from "react-router-dom";
 
-
-
-
 export default function ProductDetails() {
     const { id } = useParams();
     console.log(id)
     const dispatch = useDispatch();
     const { data: currentProduct, error, isLoading }  = useGetProductByIdQuery(id)
     const count: number = useSelector((state: any) => state.product.count);
+    console.log(count)
 
     if (isLoading) return <div>Loading...</div>;
     if (error) return <div>Error: {error.message}</div>;
 
     console.log(id)
-    React.useEffect(() => {
-    }, [id, dispatch])
 
     console.log(currentProduct)
 
@@ -67,7 +63,7 @@ export default function ProductDetails() {
                                 }}>
                                     <Button
                                         variant="text"
-                                        onClick={handleDecrement}
+                                        // onClick={handleDecrement}
                                         sx={{ height: "100%", minWidth: 0, px: 2 }}
                                     >
                                         -
@@ -106,19 +102,15 @@ export default function ProductDetails() {
                                     borderRadius: "0px",
                                     color: "#fff"
                                 }}
-                                    onClick={handleCart}>Add to cart</Button>
+                                    onClick={handleCart}
+                                    >Add to cart</Button>
                             </ButtonGroup>
                         </Grid>
                         <Grid item xs={2}>
-
                         </Grid>
                     </Grid>
                 </Box>
-
-
             </Container>
-
-
         )
     }
 }

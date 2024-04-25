@@ -1,15 +1,17 @@
-import { Table, TableBody, TableCell, TableHead, TableRow, Typography } from "@mui/material";
+import { Table, TableBody, TableCell, TableHead, TableRow } from "@mui/material";
 import { useSelector } from "react-redux";
 import { RootState } from "../../app/store";
-import { products } from "../../faker";
 import { Wrapper } from "./styles";
+import { useGetAllProductsQuery } from "../../app/products/reducers";
+import { CartItem } from "../cart/Cart";
 
 const Checkout = () => {
     const cart = useSelector((state: RootState) => state.product.shoppingCart);
-    const discAmount = useSelector(state => state.coupon);
-    const products = useSelector((state: RootState) => state.product.products)
-    console.log(cart)
-    console.log(discAmount)
+    const discAmount = useSelector(state => state?.coupon);
+    const { data: products, error, isLoading } = useGetAllProductsQuery();
+
+    if (isLoading) return <div>Loading...</div>;
+    if (error) return <div>Error: {error?.message}</div>;
 
     const finalCart = cart.map((item) => {
         const product = products.find((product) => product.userId === item.productId);

@@ -17,17 +17,17 @@ async function testSupabaseQuery() {
     }
 }
 
-testSupabaseQuery();
+// testSupabaseQuery();
 
 export const productsApi = createApi({
     reducerPath: 'productsApi',
-    baseQuery:  fakeBaseQuery(),
+    baseQuery: fakeBaseQuery(),
     endpoints: (builder) => ({
-        getAllProducts: builder.query({
+        getAllProducts: builder.query<Product[], void>({
             queryFn: async () => {
                 const { data, error } = await supabase.from('products').select('*');
                 console.log('Data:', data);
-                console.log('Error:', error); 
+                console.log('Error:', error);
                 if (error) {
                     return { error };
                 }
@@ -37,12 +37,12 @@ export const productsApi = createApi({
         getProductById: builder.query({
             queryFn: async (id) => {
                 const { data, error } = await supabase
-                .from('products')
-                .select('*')
-                .eq('userId', id)
-                .single();
+                    .from('products')
+                    .select('*')
+                    .eq('userId', id)
+                    .single();
                 console.log('Data:', data);
-                console.log('Error:', error); 
+                console.log('Error:', error);
                 if (error) {
                     return { error: { status: 'API_ERROR', message: error.message } };
                 }
@@ -56,7 +56,7 @@ export const productsApi = createApi({
 
 export const categoriesApi = createApi({
     reducerPath: 'categoriesApi',
-    baseQuery:  fakeBaseQuery(),
+    baseQuery: fakeBaseQuery(),
     endpoints: (builder) => ({
         getAllCategories: builder.query({
             queryFn: async () => {
@@ -80,12 +80,12 @@ const initialState = {
     count: 1,
     shoppingCart: localStorage.getItem('shoppingCart') ? JSON.parse(localStorage.getItem('shoppingCart')) : []
 };
-
 const ProductSlice = createSlice({
     name: 'Product',
     initialState,
     reducers: {
         setCount: (state, action) => {
+            console.log('Current count:', state.count, 'New count:', action.payload);
             state.count = action.payload;
         },
         setCart: (state, action) => {
@@ -95,34 +95,9 @@ const ProductSlice = createSlice({
             state.shoppingCart = updatedCart;
         }
     },
-    extraReducers: (builder) => {
-        builder
-            .addCase(productsApi.endpoints.getAllProducts.fulfilled, (state, action) => {
-                state.loading = false;
-                state.products = action.payload.data || [];
-            })
-            .addCase(productsApi.endpoints.getAllProducts.pending, (state) => {
-                state.loading = true;
-            })
-            .addCase(productsApi.endpoints.getAllProducts.rejected, (state, action) => {
-                state.loading = false;
-                state.error = action.error.message;
-            })
-            .addCase(categoriesApi.endpoints.getAllCategories.fulfilled, (state, action) => {
-                state.loading = false;
-                state.categories = action.payload.data || [];
-            })
-            .addCase(categoriesApi.endpoints.getAllCategories.pending, (state) => {
-                state.loading = true;
-            })
-            .addCase(categoriesApi.endpoints.getAllCategories.rejected, (state, action) => {
-                state.loading = false;
-                state.error = action.error.message;
-            });
-    }
 });
 
-export const { setCurrentProduct, setCount, setCart } = ProductSlice.actions;
+export const { setCount, setCart } = ProductSlice.actions;
 
 export const { useGetAllProductsQuery, useGetProductByIdQuery } = productsApi;
 export const { useGetAllCategoriesQuery } = categoriesApi;

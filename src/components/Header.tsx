@@ -55,7 +55,7 @@ const top100Films = products.map(product => ({ name: product.name }));
 
 export default function Header() {
     const dispatch = useDispatch();
-    // const count = useSelector((state: any) => state.product.shoppingCart ? state.product.shoppingCart.length : 0)
+    const count = useSelector((state: any) => state.product.shoppingCart ? state.product.shoppingCart.length : 0)
     const [search, setSearch] = React.useState<string | null>("");
     const [inputValue, setInputValue] = React.useState('');
     const [_searchParams, setSearchparams] = useSearchParams()
@@ -226,7 +226,7 @@ export default function Header() {
                             <Box sx={{ flexGrow: 1 }} />
                             <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
                             <Link to="/cart">
-                                {/* <IconButton
+                               <IconButton
                                     size="large"
                                     aria-label="shopping cart"
                                     color="inherit"
@@ -234,7 +234,7 @@ export default function Header() {
                                     <Badge badgeContent={count} color="error">
                                         <AddShoppingCartIcon />
                                     </Badge>
-                                </IconButton> */}
+                                </IconButton>
                             </Link>
                             </Box>
                             <Box sx={{ display: { xs: 'flex', md: 'none' } }}>

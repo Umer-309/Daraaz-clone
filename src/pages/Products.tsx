@@ -1,6 +1,6 @@
 import React from "react";
 import { Link, useLocation } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import {
     Box,
     Container,
@@ -9,7 +9,7 @@ import {
     Rating,
     Typography,
 } from "@mui/material";
-import { setCurrentProduct, useGetAllProductsQuery, useGetAllCategoriesQuery } from '../app/products/reducers'
+import { useGetAllProductsQuery, useGetAllCategoriesQuery } from '../app/products/reducers'
 import "./Products.css";
 
 
@@ -42,7 +42,7 @@ export default function Product() {
                 key={product.userId}
             >
                 <Link to={`products/${product.userId}`}
-                    onClick={() => dispatch(setCurrentProduct({ id: product.userId }))}>
+                   >
 
                     <Paper className="product-single">
                         <img src={product.image} alt={product.name} />
@@ -129,7 +129,7 @@ export default function Product() {
                                             xs={2}
                                             key={product.userId}
                                         >
-                                            <Link to={`products/${product.userId}`} onClick={() => dispatch(setCurrentProduct({ id: product.userId }))}>
+                                            <Link to={`products/${product.userId}`} >
 
                                                 <Paper className="product-single">
                                                     <img src={product.image} alt={product.name} />
