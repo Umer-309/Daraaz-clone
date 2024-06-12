@@ -226,7 +226,7 @@ export default function Header() {
                             <Box sx={{ flexGrow: 1 }} />
                             <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
                             <Link to="/cart">
-                                <IconButton
+                               <IconButton
                                     size="large"
                                     aria-label="shopping cart"
                                     color="inherit"

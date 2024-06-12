@@ -11,8 +11,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import { BoldText, StyledTableCell } from './styles';
 import Coupon from '../../components/feature/Coupon';
 import Checkout from '../../components/checkout/Checkout';
+import { useGetAllProductsQuery } from '../../app/products/reducers';
 
-interface CartItem {
+export interface CartItem {
     productId: string;
     price: number;
     total: number;
@@ -88,12 +89,16 @@ function EnhancedTableHead() {
 export function Cart() {
     const dispatch = useDispatch();
     const selector = useSelector((state: any) => state.product.shoppingCart);
-    const products = useSelector((state: any) => state.product.products)
-    console.log(selector);
-    console.log(products)
+    const { data: products, error, isLoading } = useGetAllProductsQuery();
 
-    const cart = selector.map((item) => {
-        const product = products.find((product) => product.userId === item.productId);
+    if (isLoading) return <div>Loading...</div>;
+    if (error) return <div>Error: {error?.message}</div>;
+
+    console.log(products);
+    console.log(selector);
+
+    const cart = selector?.map((item) => {
+        const product = products?.find((product) => product.userId === item.productId);
         return product ? { ...product, quantity: item.quantity } : null;
     });
     console.log(cart)

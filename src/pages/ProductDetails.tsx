@@ -1,23 +1,21 @@
 import React from "react";
 import { Box, Button, ButtonGroup, Container, Grid, Input, Rating, Typography } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
-import { setCurrentProduct, setCount, setCart, fetchProductById } from "../products/reducers";
+import { setCount, setCart, useGetProductByIdQuery } from "../app/products/reducers";
 import { useParams } from "react-router-dom";
 
-
-
-
 export default function ProductDetails() {
-    const dispatch = useDispatch();
-    const currentProduct = useSelector((state: any) => state.product.currentProduct[0]);
-    const count: number = useSelector((state: any) => state.product.count);
     const { id } = useParams();
+    console.log(id)
+    const dispatch = useDispatch();
+    const { data: currentProduct, error, isLoading }  = useGetProductByIdQuery(id)
+    const count: number = useSelector((state: any) => state.product.count);
+    console.log(count)
+
+    if (isLoading) return <div>Loading...</div>;
+    if (error) return <div>Error: {error.message}</div>;
 
     console.log(id)
-    React.useEffect(() => {
-        fetchProductById(id)
-        dispatch(fetchProductById(id))
-    }, [id, dispatch])
 
     console.log(currentProduct)
 
@@ -65,7 +63,7 @@ export default function ProductDetails() {
                                 }}>
                                     <Button
                                         variant="text"
-                                        onClick={handleDecrement}
+                                        // onClick={handleDecrement}
                                         sx={{ height: "100%", minWidth: 0, px: 2 }}
                                     >
                                         -
@@ -104,19 +102,15 @@ export default function ProductDetails() {
                                     borderRadius: "0px",
                                     color: "#fff"
                                 }}
-                                    onClick={handleCart}>Add to cart</Button>
+                                    onClick={handleCart}
+                                    >Add to cart</Button>
                             </ButtonGroup>
                         </Grid>
                         <Grid item xs={2}>
-
                         </Grid>
                     </Grid>
                 </Box>
-
-
             </Container>
-
-
         )
     }
 }
