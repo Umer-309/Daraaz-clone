@@ -94,9 +94,6 @@ export function Cart() {
     if (isLoading) return <div>Loading...</div>;
     if (error) return <div>Error: {error?.message}</div>;
 
-    console.log(products);
-    console.log(selector);
-
     const cart = selector?.map((item) => {
         const product = products?.find((product) => product.userId === item.productId);
         return product ? { ...product, quantity: item.quantity } : null;

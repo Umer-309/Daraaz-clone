@@ -54,7 +54,6 @@ const theme = createTheme({
 const top100Films = products.map(product => ({ name: product.name }));
 
 export default function Header() {
-    const dispatch = useDispatch();
     const count = useSelector((state: any) => state.product.shoppingCart ? state.product.shoppingCart.length : 0)
     const [search, setSearch] = React.useState<string | null>("");
     const [inputValue, setInputValue] = React.useState('');
@@ -123,24 +122,18 @@ export default function Header() {
             onClose={handleMobileMenuClose}
         >
             <MenuItem>
-                <IconButton size="large" aria-label="show 4 new mails" color="inherit">
-                    <Badge badgeContent={4} color="error">
-                        <MailIcon />
-                    </Badge>
-                </IconButton>
-                <p>Messages</p>
-            </MenuItem>
-            <MenuItem>
-                <IconButton
-                    size="large"
-                    aria-label="show 17 new notifications"
-                    color="inherit"
-                >
-                    <Badge badgeContent={17} color="error">
-                        <NotificationsIcon />
-                    </Badge>
-                </IconButton>
-                <p>Notifications</p>
+                <Link to="/cart">
+                    <IconButton
+                        size="large"
+                        aria-label="shopping cart"
+                        color="inherit"
+                    >
+                        <Badge badgeContent={count} color="error">
+                            <AddShoppingCartIcon />
+                        </Badge>
+                    </IconButton>
+                </Link>
+                <p>Cart</p>
             </MenuItem>
             <MenuItem onClick={handleProfileMenuOpen}>
                 <IconButton
@@ -163,7 +156,7 @@ export default function Header() {
 
         if (event && event.key !== null && event.key === "Enter") {
             if (value !== null) {
-                setSearchparams( value );
+                setSearchparams(value);
             }
         }
     }
@@ -225,17 +218,17 @@ export default function Header() {
                             </ThemeProvider>
                             <Box sx={{ flexGrow: 1 }} />
                             <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
-                            <Link to="/cart">
-                               <IconButton
-                                    size="large"
-                                    aria-label="shopping cart"
-                                    color="inherit"
-                                >
-                                    <Badge badgeContent={count} color="error">
-                                        <AddShoppingCartIcon />
-                                    </Badge>
-                                </IconButton>
-                            </Link>
+                                <Link to="/cart">
+                                    <IconButton
+                                        size="large"
+                                        aria-label="shopping cart"
+                                        color="inherit"
+                                    >
+                                        <Badge badgeContent={count} color="error">
+                                            <AddShoppingCartIcon />
+                                        </Badge>
+                                    </IconButton>
+                                </Link>
                             </Box>
                             <Box sx={{ display: { xs: 'flex', md: 'none' } }}>
                                 <IconButton
