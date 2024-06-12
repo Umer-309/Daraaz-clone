@@ -1,23 +1,17 @@
-import React from "react";
-import { Box, Button, ButtonGroup, Container, Grid, Input, Rating, Typography } from "@mui/material";
-import { useDispatch, useSelector } from "react-redux";
-import { setCount, setCart, useGetProductByIdQuery } from "../app/products/reducers";
 import { useParams } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { Box, Button, ButtonGroup, Container, Grid, Input, Rating, Typography } from "@mui/material";
+import { setCount, setCart, useGetProductByIdQuery } from "../app/products/reducers";
 
 export default function ProductDetails() {
     const { id } = useParams();
-    console.log(id)
     const dispatch = useDispatch();
     const { data: currentProduct, error, isLoading }  = useGetProductByIdQuery(id)
     const count: number = useSelector((state: any) => state.product.count);
-    console.log(count)
 
     if (isLoading) return <div>Loading...</div>;
     if (error) return <div>Error: {error.message}</div>;
 
-    console.log(id)
-
-    console.log(currentProduct)
 
     const handleDecrement = () => {
         dispatch(setCount(count > 1 ? count - 1 : count));
@@ -63,7 +57,7 @@ export default function ProductDetails() {
                                 }}>
                                     <Button
                                         variant="text"
-                                        // onClick={handleDecrement}
+                                        onClick={handleDecrement}
                                         sx={{ height: "100%", minWidth: 0, px: 2 }}
                                     >
                                         -

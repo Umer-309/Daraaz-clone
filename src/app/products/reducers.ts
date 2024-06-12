@@ -1,23 +1,13 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { supabase } from '../../supabase';
 import { Category, Product } from "../../faker";
-import { createApi, fakeBaseQuery, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import { createApi, fakeBaseQuery } from "@reduxjs/toolkit/query/react";
 
 interface ProductData {
     products: Product[],
     categories: Category[],
 }
 
-async function testSupabaseQuery() {
-    const { data, error } = await supabase.from('products').select('*');
-    if (error) {
-        console.error('Error fetching products:', error);
-    } else {
-        console.log('Fetched products:', data);
-    }
-}
-
-// testSupabaseQuery();
 
 export const productsApi = createApi({
     reducerPath: 'productsApi',
@@ -26,8 +16,6 @@ export const productsApi = createApi({
         getAllProducts: builder.query<Product[], void>({
             queryFn: async () => {
                 const { data, error } = await supabase.from('products').select('*');
-                console.log('Data:', data);
-                console.log('Error:', error);
                 if (error) {
                     return { error };
                 }
@@ -41,8 +29,6 @@ export const productsApi = createApi({
                     .select('*')
                     .eq('userId', id)
                     .single();
-                console.log('Data:', data);
-                console.log('Error:', error);
                 if (error) {
                     return { error: { status: 'API_ERROR', message: error.message } };
                 }
@@ -61,8 +47,6 @@ export const categoriesApi = createApi({
         getAllCategories: builder.query({
             queryFn: async () => {
                 const { data, error } = await supabase.from('categories').select('*');
-                console.log('Data:', data);
-                console.log('Error:', error);
                 if (error) {
                     return { error };
                 }
@@ -90,9 +74,15 @@ const ProductSlice = createSlice({
         },
         setCart: (state, action) => {
             const { productId, quantity } = action.payload;
-            const updatedCart = [...state.shoppingCart, { productId, quantity }];
-            localStorage.setItem('shoppingCart', JSON.stringify(updatedCart));
-            state.shoppingCart = updatedCart;
+            const index = state.shoppingCart.findIndex(item => item.productId === productId);
+
+            if (index !== -1) {
+                state.shoppingCart[index].quantity += quantity;
+            } else {
+                const updatedCart = [...state.shoppingCart, { productId, quantity }];
+                state.shoppingCart = updatedCart;
+            }
+            localStorage.setItem('shoppingCart', JSON.stringify(state.shoppingCart));
         }
     },
 });

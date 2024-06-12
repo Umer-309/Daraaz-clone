@@ -33,8 +33,10 @@ export default function Product() {
             return priceA - priceB;
         });
     }, [products]);
+    if (error) return <div>{error}</div>
+    if (isLoading) return <div>Loading...</div>
     const searchItems = sortedProducts
-    ?.filter(product => product.name.includes(searched))
+        ?.filter(product => product.name.includes(searched))
         .map(product => (
             <Grid
                 item
@@ -42,7 +44,7 @@ export default function Product() {
                 key={product.userId}
             >
                 <Link to={`products/${product.userId}`}
-                   >
+                >
 
                     <Paper className="product-single">
                         <img src={product.image} alt={product.name} />
@@ -107,8 +109,8 @@ export default function Product() {
                 ) : null
             }
             {
-                categories?.map(category => (
-                    <Box key={category.id}>
+                categories?.map((category) => (
+                    <Box key={category.userId}>
                         <Typography
                             component="h3"
                             variant="h5"

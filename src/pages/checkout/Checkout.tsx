@@ -11,10 +11,10 @@ const Checkout = () => {
     const { data: products, error, isLoading } = useGetAllProductsQuery();
 
     if (isLoading) return <div>Loading...</div>;
-    if (error) return <div>Error: {error?.message}</div>;
+    if (error) return <div>Error: {error}</div>;
 
     const finalCart = cart.map((item) => {
-        const product = products.find((product) => product.userId === item.productId);
+        const product = products?.find((product) => product.userId === item.productId);
         return product ? {
             ...product,
             quantity: item.quantity,
@@ -26,7 +26,6 @@ const Checkout = () => {
     const GST = Math.ceil((total * 18) / 100);
     const grandTotal = ((total - discount) + GST);
 
-    console.log(GST)
     return (
         <Wrapper>
             <Table sx={{ textWrap: 'nowrap' }}>
@@ -40,7 +39,7 @@ const Checkout = () => {
                 </TableHead>
                 <TableBody>
                     {finalCart.map((item, index) => <TableRow key={index}>
-                        <TableCell>{index}</TableCell>
+                        <TableCell>{index + 1 }</TableCell>
                         <TableCell>{item.name}</TableCell>
                         <TableCell>{item.quantity}</TableCell>
                         <TableCell>{item.total}</TableCell>
